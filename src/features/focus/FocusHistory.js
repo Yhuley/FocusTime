@@ -3,7 +3,7 @@ import {View, StyleSheet, FlatList, Text, SafeAreaView} from "react-native";
 import {fontSizes, marginSizes} from "../../utils/sizes";
 import RoundedButton from "../../components/RoundedButton";
 
-const HistoryItem = ({item, index}) => {
+const HistoryItem = ({item}) => {
     return(
         <Text style={styles.historyItem(item.completed)}>
             {item.subject}
@@ -29,7 +29,7 @@ const FocusHistory = ({focusHistory, onClear}) => {
                             <RoundedButton
                                 size={65}
                                 title={'clear'}
-                                onPressEvent={onClear}
+                                onPressEvent={clearHistory}
                             />
                         </View>
                     </>

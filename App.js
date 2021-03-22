@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, AsyncStorage} from 'react-native';
 import Focus from "./src/features/focus/Focus";
 import Timer from "./src/features/timer/Timer";
 import {paddingSizes} from "./src/utils/sizes";
@@ -11,9 +11,39 @@ export default function App() {
 
     const onClear = () => setFocusHistory([]);
 
-    const addFocusHistoryWithStatus = (subject, completed) => {
-        setFocusHistory([...focusHistory, {subject, completed}]);
+    const addFocusHistoryWithStatus = (subject, completed, key = Date.now().toString()) => {
+        setFocusHistory([...focusHistory, {subject, completed, key}]);
     };
+
+    const saveFocusHistory = async () => {
+        try {
+            await AsyncStorage.setItem('focusHistory', JSON.stringify(focusHistory));
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const loadFocusHistory = async () => {
+        try {
+            const history = await AsyncStorage.getItem('focusHistory');
+
+            if (focusHistory && JSON.parse(history).length) {
+                setFocusHistory(JSON.parse(history));
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    useEffect(()=>{
+        loadFocusHistory();
+    },[]);
+
+    useEffect(() => {
+        saveFocusHistory();
+    }, [focusHistory]);
+
+
     return (
         <View style={styles.container}>
             {
