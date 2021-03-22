@@ -60,13 +60,13 @@ export default function App() {
                         }}
                     />
                     :
-                    <>
+                    <View style={{flex: 0.5}}>
                         <Focus addSubject={setFocusSubject}/>
                         <FocusHistory
                             {...{focusHistory}}
                             {...{onClear}}
                         />
-                    </>
+                    </View>
             }
         </View>
     );
@@ -76,6 +76,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#104770',
-        padding: paddingSizes.m
+        padding: paddingSizes.l
     }
 });

@@ -18,12 +18,9 @@ const Countdown = ({minutes = 0.1, isPaused = true, onProgress, onEnd}) => {
         setMillis(time => {
             if (time === 0){
                 clearInterval(interval.current);
-                onEnd();
                 return time;
             }
-            const timeLeft = time - 1000;
-            onProgress(timeLeft / minutesToMillis(minutes));
-            return timeLeft;
+            return time - 1000;
         })
     }
 
@@ -40,6 +37,11 @@ const Countdown = ({minutes = 0.1, isPaused = true, onProgress, onEnd}) => {
     useEffect(() => {
         setMillis(minutesToMillis(minutes))
     },[minutes])
+
+    useEffect(() => {
+        onProgress(millis / minutesToMillis(minutes));
+        if(millis === 0) onEnd();
+    },[millis])
 
     return (
         <View style={styles.countdown}>
