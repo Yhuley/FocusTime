@@ -7,14 +7,14 @@ import Countdown from "../countdown/Countdown";
 import RoundedButton from "../../components/RoundedButton";
 import Timing from "./Timing";
 
-const Timer = ({focusSubject}) => {
+const Timer = ({focusSubject, onTimerEnd, clearSubject}) => {
     useKeepAwake();
 
     const [isStarted, setIsStarted] = useState(false);
     const [progress, setProgress] = useState(1);
     const [minutes, setMinutes] = useState(0.1);
 
-    const onPress = () => setIsStarted(!isStarted);
+    const switchStart = () => setIsStarted(!isStarted);
 
     const onProgress = progress => setProgress(progress);
 
@@ -38,6 +38,7 @@ const Timer = ({focusSubject}) => {
         setMinutes(5);
         setProgress(1);
         setIsStarted(false);
+        onTimerEnd();
     };
 
     return (
@@ -61,7 +62,18 @@ const Timer = ({focusSubject}) => {
                 <Text style={styles.task}>{focusSubject}</Text>
             </View>
             <Timing onChangeTime={changeTime}/>
-            <RoundedButton title={isStarted ? 'pause' : 'start'} onPressEvent={onPress}/>
+            <View style={styles.buttonContainer}>
+                <RoundedButton
+                    title={isStarted ? 'pause' : 'start'}
+                    onPressEvent={switchStart}
+                />
+                <View style={styles.clearSubject}>
+                    <RoundedButton
+                        title={'-'} size={50}
+                        onPressEvent={clearSubject}
+                    />
+                </View>
+            </View>
         </View>
     );
 };
@@ -78,6 +90,13 @@ const styles = StyleSheet.create({
     },
     progress: {
         marginTop: marginSizes.l
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        marginTop: marginSizes.l
+    },
+    clearSubject: {
+        marginLeft: marginSizes.m
     },
     title: {
         color: '#fff',

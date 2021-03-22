@@ -11,7 +11,11 @@ export default function App() {
         <View style={styles.container}>
             {
                 focusSubject ?
-                    <Timer {...{focusSubject}}/>
+                    <Timer
+                        {...{focusSubject}}
+                        onTimerEnd={() => setFocusSubject(null)}
+                        clearSubject={() => setFocusSubject(null)}
+                    />
                     :
                     <Focus addSubject={setFocusSubject}/>
             }

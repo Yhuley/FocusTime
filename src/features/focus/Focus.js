@@ -5,7 +5,7 @@ import { fontSizes, marginSizes } from "../../utils/sizes";
 import RoundedButton from "../../components/RoundedButton";
 
 export default function Focus({addSubject}) {
-    const [tmpItem, setTmpItem] = useState(null)
+    const [subject, setSubject] = useState(null)
 
 
     return (
@@ -16,13 +16,13 @@ export default function Focus({addSubject}) {
                     <TextInput
                         style={styles.textInput}
                         onSubmitEditing={({nativeEvent}) => {
-                           setTmpItem(nativeEvent.text)
+                           setSubject(nativeEvent.text)
                         }}
                     />
                     <RoundedButton
                         title={'+'}
                         size={50}
-                        onPressEvent={() => addSubject(tmpItem)}
+                        onPressEvent={() => addSubject(subject)}
                     />
                 </View>
             </View>
